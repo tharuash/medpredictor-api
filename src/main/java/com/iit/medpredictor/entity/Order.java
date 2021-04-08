@@ -1,5 +1,6 @@
 package com.iit.medpredictor.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.iit.medpredictor.entity.type.Medicine;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,6 +56,7 @@ public class Order
 	@Column( name = "note" )
 	private String note;
 
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn( name = "user_id", referencedColumnName = "user_id" )
 	@ToString.Exclude

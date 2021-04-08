@@ -1,31 +1,33 @@
 package com.iit.medpredictor.service;
 
-import com.iit.medpredictor.dto.AuthRequest;
 import com.iit.medpredictor.entity.Order;
 import com.iit.medpredictor.entity.User;
+import com.iit.medpredictor.entity.type.Medicine;
 import com.iit.medpredictor.repository.OrderRepository;
 import com.iit.medpredictor.repository.UserRepository;
+import com.iit.medpredictor.utils.AbstractService;
+import com.iit.medpredictor.utils.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class OrderService
+public class OrderService extends AbstractService
 {
 	final OrderRepository orderRepository;
 
 	final UserRepository userRepository;
 
-	public ResponseEntity< Order > createOrder( Order order, Long userId )
+	public ResponseEntity< ResponseWrapper > createOrder( Order order, Long userId )
 	{
-		ResponseEntity<Order> response = null;
+		ResponseEntity< ResponseWrapper > response = null;
 
 		Optional<User> optionalUser = userRepository.findById( userId );
 
@@ -34,38 +36,38 @@ public class OrderService
 			User tempUser = optionalUser.get();
 			order.setUser( tempUser );
 
-			Order savedOrder = orderRepository.save( order );
-			response = ResponseEntity.status( HttpStatus.CREATED ).body( order );
+			try
+			{
+				Order savedOrder = orderRepository.save( order );
+				response = buildEntityResponse( savedOrder, HttpStatus.CREATED );
+			}
+			catch( Exception ex )
+			{
+				response = buildErrorResponse( "Order saving error : " + ex.toString() );
+			}
+
 		}
 		else
 		{
-			response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
+			response = buildErrorResponse( "Unauthorized user has attempted to do a forbidden activity." );
 		}
 
 		return response;
 	}
 
-	public ResponseEntity< List<Order> > getLast100Orders()
+	public ResponseEntity< ResponseWrapper > getLast50Orders( Medicine medicine )
 	{
-		ResponseEntity<List <Order> > response = null;
+		ResponseEntity< ResponseWrapper > response = null;
 
 		try{
 
-
+			response = buildEntityListResponse( orderRepository.findLatestOrders( medicine ).stream().map( i -> (Object) i ).collect( Collectors.toList()), HttpStatus.FOUND );
+			// response = ResponseEntity.status( HttpStatus.FOUND ).body( orderRepository.findLatestOrders(medicine) );
 
 		}
-
-		if( optionalUser.isPresent() )
+		catch( Exception ex )
 		{
-			User tempUser = optionalUser.get();
-			order.setUser( tempUser );
-
-			Order savedOrder = orderRepository.save( order );
-			response = ResponseEntity.status( HttpStatus.CREATED ).body( order );
-		}
-		else
-		{
-			response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
+			response = buildErrorResponse( "Order retrieving error : " + ex.getMessage() );
 		}
 
 		return response;

@@ -1,8 +1,11 @@
 package com.iit.medpredictor.service;
 
 import com.iit.medpredictor.dto.AuthRequest;
+import com.iit.medpredictor.dto.AuthResponse;
 import com.iit.medpredictor.entity.User;
 import com.iit.medpredictor.repository.UserRepository;
+import com.iit.medpredictor.utils.AbstractService;
+import com.iit.medpredictor.utils.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,46 +17,44 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AuthService
+public class AuthService extends AbstractService
 {
 
 	final UserRepository userRepository;
 
-	public ResponseEntity< User > loginUser( AuthRequest authRequest )
+	public ResponseEntity< ResponseWrapper > loginUser( AuthRequest authRequest )
 	{
-		ResponseEntity<User> response = null;
+		ResponseEntity< ResponseWrapper > response = null;
 
 		Optional<User> optionalUser = userRepository.findUserByUsernameAndAndPassword( authRequest.getUsername(), authRequest.getPassword() );
 
 		if( optionalUser.isPresent() )
 		{
 			User tempUser = optionalUser.get();
-			tempUser.setPassword( "" );
-			response = ResponseEntity.status( HttpStatus.FOUND ).body( tempUser );
+			response = buildEntityResponse( new AuthResponse(tempUser.getUserId(), tempUser.getUsername()) , HttpStatus.OK );;
 		}
 		else
-			{
-			response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
+		{
+			response = buildErrorResponse( "The username or password is incorrect or user may not registered yet" );
 		}
 
 		return response;
 	}
 
-	public ResponseEntity< User > registerUser( AuthRequest authRequest )
+	public ResponseEntity< ResponseWrapper > registerUser( AuthRequest authRequest )
 	{
-		ResponseEntity<User> response = null;
+		ResponseEntity<ResponseWrapper> response = null;
 
 		if ( !userRepository.existsByUsername( authRequest.getUsername() ) && !userRepository.existsByEmail( authRequest.getEmail() ))
 		{
 			User user = new User(0L , authRequest.getUsername(), authRequest.getEmail(), authRequest.getPassword(), null);
 			User tempUser = userRepository.save( user );
-			tempUser.setPassword( "" );
-			response = ResponseEntity.status( HttpStatus.CREATED ).body( tempUser );
+			response = buildEntityResponse( new AuthResponse(tempUser.getUserId(), tempUser.getUsername()) , HttpStatus.CREATED );;
 
 		}
 		else
 			{
-			response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
+			response = buildErrorResponse( "Your username or email has reserved by someone before. Please use another." );
 		}
 
 		return response;

@@ -3,6 +3,8 @@ package com.iit.medpredictor.controller;
 import com.iit.medpredictor.dto.AuthRequest;
 import com.iit.medpredictor.entity.User;
 import com.iit.medpredictor.service.AuthService;
+import com.iit.medpredictor.utils.AbstractService;
+import com.iit.medpredictor.utils.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,13 @@ public class AuthController
 	final AuthService authService;
 
 	@PostMapping(value = "/login")
-	public ResponseEntity< User > loginUser(@RequestBody AuthRequest authRequest )
+	public ResponseEntity< ResponseWrapper > loginUser( @RequestBody AuthRequest authRequest )
 	{
 		return authService.loginUser( authRequest );
 	}
 
 	@PostMapping(value = "/register")
-	public ResponseEntity< User > registerUser(@RequestBody AuthRequest authRequest )
+	public ResponseEntity< ResponseWrapper > registerUser( @RequestBody AuthRequest authRequest )
 	{
 		return authService.registerUser( authRequest );
 	}
