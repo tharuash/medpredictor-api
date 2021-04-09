@@ -35,7 +35,7 @@ public class AuthService extends AbstractService
 		}
 		else
 		{
-			response = buildErrorResponse( "The username or password is incorrect or user may not registered yet" );
+			response = buildErrorResponse( "The username or password is incorrect or user may not registered yet", HttpStatus.OK );
 		}
 
 		return response;
@@ -44,6 +44,8 @@ public class AuthService extends AbstractService
 	public ResponseEntity< ResponseWrapper > registerUser( AuthRequest authRequest )
 	{
 		ResponseEntity<ResponseWrapper> response = null;
+
+
 
 		if ( !userRepository.existsByUsername( authRequest.getUsername() ) && !userRepository.existsByEmail( authRequest.getEmail() ))
 		{
@@ -54,7 +56,7 @@ public class AuthService extends AbstractService
 		}
 		else
 			{
-			response = buildErrorResponse( "Your username or email has reserved by someone before. Please use another." );
+			response = buildErrorResponse( "Your username or email has reserved by someone before. Please use another.", HttpStatus.OK );
 		}
 
 		return response;

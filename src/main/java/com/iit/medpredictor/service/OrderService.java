@@ -43,31 +43,30 @@ public class OrderService extends AbstractService
 			}
 			catch( Exception ex )
 			{
-				response = buildErrorResponse( "Order saving error : " + ex.toString() );
+				response = buildErrorResponse( "Order saving error : " + ex.toString() , HttpStatus.INTERNAL_SERVER_ERROR );
 			}
 
 		}
 		else
 		{
-			response = buildErrorResponse( "Unauthorized user has attempted to do a forbidden activity." );
+			response = buildErrorResponse( "Unauthorized user has attempted to do a forbidden activity." , HttpStatus.UNAUTHORIZED);
 		}
 
 		return response;
 	}
 
-	public ResponseEntity< ResponseWrapper > getLast50Orders( Medicine medicine )
+	public ResponseEntity< ResponseWrapper > getLast50Orders( )
 	{
 		ResponseEntity< ResponseWrapper > response = null;
 
 		try{
 
-			response = buildEntityListResponse( orderRepository.findLatestOrders( medicine ).stream().map( i -> (Object) i ).collect( Collectors.toList()), HttpStatus.FOUND );
-			// response = ResponseEntity.status( HttpStatus.FOUND ).body( orderRepository.findLatestOrders(medicine) );
+			response = buildEntityListResponse( orderRepository.findLatestOrders().stream().map( i -> (Object) i ).collect( Collectors.toList()), HttpStatus.OK );
 
 		}
 		catch( Exception ex )
 		{
-			response = buildErrorResponse( "Order retrieving error : " + ex.getMessage() );
+			response = buildErrorResponse( "Order retrieving error : " + ex.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return response;

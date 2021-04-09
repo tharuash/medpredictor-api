@@ -19,9 +19,9 @@ public abstract class AbstractService
 		return ResponseEntity.status( httpStatus ).body( responseWrapper );
 	}
 
-	public ResponseEntity< ResponseWrapper > buildErrorResponse( String message ){
+	public ResponseEntity< ResponseWrapper > buildErrorResponse( String message, HttpStatus httpStatus ){
 		responseWrapper = new ResponseWrapper( null, null, false, message );
-		return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( responseWrapper );
+		return ResponseEntity.status( httpStatus ).body( responseWrapper );
 	}
 
 

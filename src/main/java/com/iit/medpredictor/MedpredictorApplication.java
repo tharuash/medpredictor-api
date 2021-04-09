@@ -10,4 +10,6 @@ public class MedpredictorApplication {
 		SpringApplication.run(MedpredictorApplication.class, args);
 	}
 
+
+
 }

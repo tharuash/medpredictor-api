@@ -4,6 +4,7 @@ import com.iit.medpredictor.entity.type.Medicine;
 
 public interface OrderDTO
 {
+	Long getOrderId();
 	Medicine getMedicine();
 	Integer getYear();
 	Short getMonth();
