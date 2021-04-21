@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for order related functions
+ */
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -27,12 +30,18 @@ public class OrderController
 		return "test string";
 	}
 
+	/**
+	 * Get latest 50 orders made by the users.
+	 */
 	@GetMapping
 	public ResponseEntity< ResponseWrapper > getLast50Orders()
 	{
 		return orderService.getLast50Orders();
 	}
 
+	/**
+	 * Create an order by the user.
+	 */
 	@PostMapping
 	public ResponseEntity< ResponseWrapper > createOrder( @RequestBody Order order, @RequestParam("uid") Long userId )
 	{

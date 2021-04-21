@@ -10,6 +10,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Testing class for Auth Service test
+ */
 public class AuthServiceTest extends AbstractTest
 {
 	@Override
@@ -18,6 +21,9 @@ public class AuthServiceTest extends AbstractTest
 		super.setUp();
 	}
 
+	/**
+	 * Test when username and password given will user be authenticated or not
+	 */
 	@Test
 	public void userShouldAuthenticatedWhenUsernameAndPasswordReceived() throws Exception {
 		String uri = "/auth/login";

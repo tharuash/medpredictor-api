@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for order related functions
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +28,9 @@ public class OrderService extends AbstractService
 
 	final UserRepository userRepository;
 
+	/**
+	 * Create an order by the user implementation
+	 */
 	public ResponseEntity< ResponseWrapper > createOrder( Order order, Long userId )
 	{
 		ResponseEntity< ResponseWrapper > response = null;
@@ -55,6 +61,9 @@ public class OrderService extends AbstractService
 		return response;
 	}
 
+	/**
+	 * Get latest 50 orders made by the users implementation
+	 */
 	public ResponseEntity< ResponseWrapper > getLast50Orders( )
 	{
 		ResponseEntity< ResponseWrapper > response = null;

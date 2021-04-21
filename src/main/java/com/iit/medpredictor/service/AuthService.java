@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service class for user authentication related functions.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class AuthService extends AbstractService
 
 	final UserRepository userRepository;
 
+	/**
+	 * User login implementation
+	 */
 	public ResponseEntity< ResponseWrapper > loginUser( AuthRequest authRequest )
 	{
 		ResponseEntity< ResponseWrapper > response = null;
@@ -41,6 +47,9 @@ public class AuthService extends AbstractService
 		return response;
 	}
 
+	/**
+	 * User registration implementation
+	 */
 	public ResponseEntity< ResponseWrapper > registerUser( AuthRequest authRequest )
 	{
 		ResponseEntity<ResponseWrapper> response = null;

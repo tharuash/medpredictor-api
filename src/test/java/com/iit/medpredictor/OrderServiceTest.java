@@ -10,6 +10,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Testing class for order service class
+ */
 public class OrderServiceTest extends AbstractTest
 {
 	@Override
@@ -18,6 +21,9 @@ public class OrderServiceTest extends AbstractTest
 		super.setUp();
 	}
 
+	/**
+	 * Test when requested will latest 50 orders returns
+	 */
 	@Test
 	public void latestOrdersListShouldReturnWhenOrdersHasRequested() throws Exception {
 		String uri = "/orders";
@@ -28,6 +34,9 @@ public class OrderServiceTest extends AbstractTest
 		assertEquals(200, status);
 	}
 
+	/**
+	 * Test when requested will order creates
+	 */
 	@Test
 	public void orderShouldAddWhenOrderCreatedRequested() throws Exception {
 		String uri = "/orders?uid=1";

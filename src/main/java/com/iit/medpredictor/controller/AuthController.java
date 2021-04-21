@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for user authentication related functions.
+ */
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -21,12 +24,18 @@ public class AuthController
 {
 	final AuthService authService;
 
+	/**
+	 * User login
+	 */
 	@PostMapping(value = "/login")
 	public ResponseEntity< ResponseWrapper > loginUser( @RequestBody AuthRequest authRequest )
 	{
 		return authService.loginUser( authRequest );
 	}
 
+	/**
+	 * User registration
+	 */
 	@PostMapping(value = "/register")
 	public ResponseEntity< ResponseWrapper > registerUser( @RequestBody AuthRequest authRequest )
 	{

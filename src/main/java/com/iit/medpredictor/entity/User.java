@@ -18,6 +18,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * Entity class for Order. Used to map orders table in database.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

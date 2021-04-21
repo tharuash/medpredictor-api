@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * Service class for initial data handling functions
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class InitialService extends AbstractService
 
 	final OrderRepository orderRepository;
 
+	/**
+	 * Add initial admin user and history of orders to the database implementation
+	 */
 	public boolean addInitialData()
 	{
 		boolean isSucceed = false;
@@ -74,6 +80,9 @@ public class InitialService extends AbstractService
 
 	}
 
+	/**
+	 * Delete initial data added implementation
+	 */
 	public void deleteInitialData(Long id){
 		orderRepository.deleteById( id );
 	}

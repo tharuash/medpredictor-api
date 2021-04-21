@@ -19,6 +19,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * Entity class for Order. Used to map orders table in database.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

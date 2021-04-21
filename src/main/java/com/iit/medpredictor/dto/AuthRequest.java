@@ -6,6 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Request object for login and registration
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

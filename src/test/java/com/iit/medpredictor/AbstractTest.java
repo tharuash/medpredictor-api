@@ -15,6 +15,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 
+/**
+ * Abstract class for test classes
+ */
 @RunWith( SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MedpredictorApplication.class)
 @WebAppConfiguration
@@ -25,18 +28,28 @@ public abstract class AbstractTest
 	@Autowired
 	WebApplicationContext webApplicationContext;
 
+	/**
+	 * Setup initial mock configurations
+	 */
 	protected void setUp() {
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
+
+	/**
+	 * Map object to JSON format
+	 */
 	protected String mapToJson(Object obj) throws JsonProcessingException
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.writeValueAsString(obj);
 	}
+
+	/**
+	 * Map JSON to object format
+	 */
 	protected <T> T mapFromJson(String json, Class<T> clazz)
 			throws JsonParseException, JsonMappingException, IOException
 	{
-
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.readValue(json, clazz);
 	}
